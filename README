@@ -1,0 +1,12 @@
+This is a Gemini (https://gemini.circumlunar.space/) plugin for Dillo.
+Please refer to the Dillo documentation on how to install a plugin and
+bind it to an URI scheme. In short, I have this:
+
+	$ tail -n 1 ~/.dillo/dpidrc
+	proto.gemini=gemini/gemini.filter.dpi
+
+	$ ls ~/.dillo/dpi/gemini
+	gemini.filter.dpi
+
+The plugin renders to plain, unstyled HTML, so it should be possible
+to style the output in the standard Dillo way.
