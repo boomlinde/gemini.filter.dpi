@@ -40,7 +40,6 @@ func main() {
 	err = dpi.AutoRun(func(tag map[string]string, w io.Writer) error {
 		// The writer handed to us from AutoRun will never return an error.
 		// It will fail silently and ignore writes after the first error.
-		log.Println(tag)
 		switch tag["cmd"] {
 		case "open_url":
 			url := tag["url"]
@@ -229,7 +228,6 @@ func handleInput(w io.Writer, u string) error {
 	query = (&url.URL{Path: query}).String()
 	// hack to encode + as %2B
 	query = strings.Replace(query, "+", "%2B", -1)
-	log.Println("-----query--------", query)
 
 	redirect(w, inputprefix+u, target+"?"+query)
 	return dpi.Done
