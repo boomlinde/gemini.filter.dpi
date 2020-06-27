@@ -20,13 +20,19 @@ for a pleasant color scheme:
 	}
 
 	#gemini-plugin-body div {
-		padding-left: 2em;
-		padding-right: 2em;
-		padding-bottom: 2em;
+		padding: 2em;
+		padding-top: 1em;
+		padding-bottom: 1em;
 	}
 
-	#gemini-plugin-body ul { margin-left: 2em; }
+
+	#gemini-plugin-body h1,h2,h3,ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	#gemini-plugin-body ul { margin-left: 1em; }
 
 	#gemini-plugin-body h1 { color: #624; }
 	#gemini-plugin-body h2 { color: #462; }
-	#gemini-plugin-body h2 { color: #246; }
+	#gemini-plugin-body h3 { color: #246; }
