@@ -159,7 +159,16 @@ func main() {
 func redirect(w io.Writer, from, to string) {
 	startPage(w, from, "text/html")
 	w.Write([]byte("<!DOCTYPE html>\n"))
+	w.Write([]byte("<html>\n"))
+	w.Write([]byte("<head>\n"))
+	w.Write([]byte("<title>"))
+	fmt.Fprintf(w, "Redirecting to %s", html.EscapeString(to))
+	w.Write([]byte("</title>\n"))
 	fmt.Fprintf(w, "<meta http-equiv=\"Refresh\" content=\"0; url='%s'\" />", to)
+	w.Write([]byte("</head>\n"))
+	w.Write([]byte("<body id='gemini-plugin-body'>\n"))
+	w.Write([]byte("</body>\n"))
+	w.Write([]byte("</html>\n"))
 }
 
 func pinpage(w io.Writer, uri string, tlserr error) {
