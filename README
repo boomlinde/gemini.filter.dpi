@@ -9,4 +9,24 @@ bind it to an URI scheme. In short, I have this:
 	gemini.filter.dpi
 
 The plugin renders to plain, unstyled HTML, so it should be possible
-to style the output in the standard Dillo way.
+to style the output in the standard Dillo way. The body used in
+generated documents has the ID "gemini-plugin-body" so that you can
+style just dillo in ~/dillo/style.css. I currently use these rules
+for a pleasant color scheme:
+
+	#gemini-plugin-body {
+		background-color: #fec;
+		color: black;
+	}
+
+	#gemini-plugin-body div {
+		padding-left: 2em;
+		padding-right: 2em;
+		padding-bottom: 2em;
+	}
+
+	#gemini-plugin-body ul { margin-left: 2em; }
+
+	#gemini-plugin-body h1 { color: #624; }
+	#gemini-plugin-body h2 { color: #462; }
+	#gemini-plugin-body h2 { color: #246; }
