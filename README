@@ -9,7 +9,7 @@ bind it to an URI scheme. In short, I have this:
 	gemini.filter.dpi
 
 	$ cat ~/.dillo/gemini/config.json
-    { "autoPin": true }
+	{ "autoPin": true }
 
 By default, the plugin prompts you to pin the certificate whenever you
 visit a previously unknown host. The pinned certificates are stored in
@@ -17,7 +17,7 @@ visit a previously unknown host. The pinned certificates are stored in
 behavior by writing the following content to
 ~/.dillo/gemini/config.json :
 
-    { "autoPin": true }
+	{ "autoPin": true }
 
 or by copying the provided config.json to said location.
 
