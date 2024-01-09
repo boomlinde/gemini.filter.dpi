@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html"
 	"io"
@@ -25,6 +26,27 @@ var gem *client.Client
 const pinprefix = "gemini:pin:"
 const inputprefix = "gemini:input:"
 
+var config struct {
+	AutoPin bool `json:"autoPin"`
+}
+
+func loadConfig(path string) error {
+	f, err := os.Open(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+	defer f.Close()
+
+	if err := json.NewDecoder(f).Decode(&config); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func main() {
 	log.SetPrefix("[dillo-gemini]")
 
@@ -32,6 +54,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if err := loadConfig(filepath.Join(usr.HomeDir, ".dillo", "gemini", "config.json")); err != nil {
+		log.Println("failed to load config")
+	}
+
 	gem = client.NewClient(filepath.Join(usr.HomeDir, ".dillo", "gemini", "pinned"))
 	gem.Dialer = &net.Dialer{
 		Timeout: 30 * time.Second,
@@ -69,14 +95,25 @@ func main() {
 			url = norm
 
 			// Handle connection errors
+		request:
 			r, err := gem.Request(url)
 			if err != nil {
 				if client.Untrusted(err) || client.Invalid(err) {
-					pinpage(w, url, err)
-					return dpi.Done
+					if config.AutoPin {
+						log.Println("pinning certificate for", url)
+						if err := gem.Pin(url); err != nil {
+							interrpage(w, url, err)
+							return err
+						}
+						goto request
+					} else {
+						pinpage(w, url, err)
+						return dpi.Done
+					}
+				} else {
+					interrpage(w, url, err)
+					return err
 				}
-				interrpage(w, url, err)
-				return err
 			}
 			defer r.Close()
 
